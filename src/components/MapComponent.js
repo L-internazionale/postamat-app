@@ -1,7 +1,8 @@
 import React from "react";
-import { Map, Marker, Popup, TileLayer } from "react-leaflet";
+import { Map, Marker, Popup, Pane, Circle, TileLayer, Polygon } from "react-leaflet";
 import { Icon } from "leaflet";
 import * as parkData from "../data/skateboard-parks.json";
+import * as districtData from "../data/districts.json"
 import Heatmap from "./Heatmap";
 import "./Map.css";
 
@@ -10,15 +11,37 @@ export const icon = new Icon({
   iconSize: [25, 25]
 });
 
+export const fillBlueOptions = { fillColor: 'blue' }
+export const blackOptions = { color: 'black' }
+
 
 const MapComponent = () => {
   const [activePark, setActivePark] = React.useState(null);
+  const purpleOptions = { color: 'purple' }
   return (
-    <Map center={[45.4, -75.7]} zoom={12}>
+    <Map center={[55.755825, 37.617298]} zoom={12}>
 	  <Heatmap/>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+	  <Pane name="custom" style={{ zIndex: 100 }}>
+		<Circle center={[55.755825, 37.617298]} radius={200} />
+	   </Pane>
+	  <Marker position={[55.755825, 37.617298]}>
+		<Popup>Hello world</Popup>
+	  </Marker>
+
+	  {districtData.features.map(district => (
+        <Polygon
+          positions={[
+            district.geometry.coordinates
+          ]}
+		  onClick={() => {
+            console.log('mosab');
+          }}
+		  pathOptions={purpleOptions}
+        />
+      ))}
 
       {parkData.features.map(park => (
         <Marker
