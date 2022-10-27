@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/material": "^5.10.11",
+    "@reduxjs/toolkit": "^1.8.6",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -12,6 +16,7 @@
     "react-leaflet": "^2.6.0",
     "react-leaflet-heatmap-layer": "^2.0.0",
     "react-scripts": "3.3.0",
+    "redux": "^4.2.0",
     "swr": "^0.1.15"
   },
   "scripts": {
