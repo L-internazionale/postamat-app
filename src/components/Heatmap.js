@@ -9,9 +9,9 @@ const Heatmap = () => {
 	points={heatmapData.features}
 	longitudeExtractor={(m) => m.geometry.coordinates[0]}
 	latitudeExtractor={(m) => m.geometry.coordinates[1]}
-	intensityExtractor={(m) => parseFloat(m.geometry.coordinates[1])}
-	max={100}
-	minOpacity={0.2}
+	intensityExtractor={(m) => parseFloat(m.properties.rating)}
+	max={1}
+	minOpacity={0}
   />
   )
 }
