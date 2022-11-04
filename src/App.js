@@ -3,8 +3,6 @@ import MapComponent from "./components/Map/MapComponent";
 import UltimateFilter from "./components/Body/UltimateFilter";
 import SearchBar from "./components/Top/SearchBar"
 import Download from './components/Map/Download'
-import PostomatCard from './components/Body/PostomatCard'
-import CardList from './components/Body/CardList'
 import { Grid, createTheme, Container, ThemeProvider, CssBaseline, Divider } from '@mui/material';
 
 
@@ -29,7 +27,7 @@ function App() {
 	<ThemeProvider theme={theme}>
 		<CssBaseline/>
 		<Container maxWidth={'xl'}>
-			<Grid container padding={0} spacing={1}>
+			<Grid container padding={0} spacing={0}>
 			
 						<Grid item xs={12} >
 								<SearchBar/>
@@ -38,13 +36,8 @@ function App() {
 						 <Divider/>
 						
 						<Grid item xs={5}>
-							<Grid container spacing={1}>
-								<Grid item xs={12}>
 									<UltimateFilter/>
-								</Grid>
-							</Grid>
 						</Grid>
-
 
 						<Grid item xs={7}>
 							<Grid container padding={0} spacing={1}>

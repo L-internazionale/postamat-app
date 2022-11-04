@@ -1,23 +1,20 @@
 import * as React from 'react';
 
-import {  Box, Card} from '@mui/material';
-import DistrictsTypeBox from './DistrictsTypeBox';
+import {  Box  } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import ListItem from '@mui/material/ListItem';
 import Chip from '@mui/material/Chip';
-import Paper from '@mui/material/Paper';
 import List from '@mui/material/List';
 
 import TagFacesIcon from '@mui/icons-material/TagFaces';
 import Button from '@mui/material/Button';
-import { useTheme } from '@mui/material/styles';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Checkbox from '@mui/material/Checkbox';
 import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
+import { Grid } from '@mui/material';
 import CardList from './CardList'
 
 const names = [
@@ -35,25 +32,25 @@ const names = [
 
 export default function BasicCard() {
 
-	const [chipData, setChipData] = React.useState([
-		{ key: 0, label: 'Angular' },
-		{ key: 1, label: 'jQuery' },
-		{ key: 2, label: 'Polymer' },
-		{ key: 3, label: 'React' },
-		{ key: 4, label: 'Vue.js' },
+	const [districtData, setDistrictData] = React.useState([
+		{ coordinates: 0, name: 'Angular' },
+		{ coordinates: 1, name: 'jQuery' },
+		{ coordinates: 2, name: 'Polymer' },
+		{ coordinates: 3, name: 'React' },
+		{ coordinates: 4, name: 'Vue.js' },
 		]);
 
-	const [personName, setPersonName] = React.useState([]);
+	const [typeName, setTypeName] = React.useState([]);
 
-	const handleChange = (event) => {
-			const {
-			  target: { value },
-			} = event;
-			setPersonName(
-			  // On autofill we get a stringified value.
-			  typeof value === 'string' ? value.split(',') : value,
-			);
-		  };
+	const handleTypeChange = (event) => {
+		const {
+			target: { value },
+		} = event;
+		setTypeName(
+			// On autofill we get a stringified value.
+			typeof value === 'string' ? value.split(',') : value,
+		);
+	};
 
   return (
 
@@ -84,15 +81,9 @@ export default function BasicCard() {
 				}}
 				subheader={<li />}
 				>
-					{chipData.map((data) => {
-						let icon;
-
-						if (data.label === 'React') {
-						icon = <TagFacesIcon />;
-						}
-
+					{districtData.map((data) => {
 						return (
-						<ListItem key={data.key}>
+						<ListItem>
 							<Chip
 							sx={{
 								fontSize: "15px",
@@ -109,8 +100,7 @@ export default function BasicCard() {
 										},
 								}}
 							variant="outlined"
-							icon={icon}
-							label={data.label}
+							label={data.name}
 							/>
 						</ListItem>
 						);
@@ -119,7 +109,11 @@ export default function BasicCard() {
         </Typography>
         
         <Typography sx={{fontSize: "18.5px", m:1, ml:0, fontWeight: 'bold'}} color="#000000" >
-            Выберите места для размещения постаматов :
+			<Grid container>
+				<Grid item xs={6}>
+				Выберите места для размещения постаматов :
+				</Grid>
+				<Grid item xs={6}>
 				<FormControl sx={{ mt: 2, mb:2, width:'100%',  border: 0, borderRadius: 1  }}>
 					<Select
 							sx={{
@@ -135,19 +129,21 @@ export default function BasicCard() {
 						labelId="demo-multiple-chip-label"
 						id="demo-multiple-chip"
 						multiple
-						value={personName}
-						onChange={handleChange}
+						value={typeName}
+						onChange={handleTypeChange}
 						renderValue={(selected) => selected.join(', ')}
 						input={<OutlinedInput sx={{ border: 0, borderRadius: 1 }} />}
 						>
 						{names.map((name) => (
 							<MenuItem key={name} value={name}>
-							<Checkbox checked={personName.indexOf(name) > -1} />
+							<Checkbox checked={typeName.indexOf(name) > -1} />
 							<ListItemText primary={name} />
 							</MenuItem>
 						))}
 					</Select>
 				</FormControl>
+				</Grid>
+			</Grid>
         </Typography>
 
         <Typography sx={{fontSize: "18.5px", m:1, ml:0, fontWeight: 'bold'}} color="#000000">
@@ -228,7 +224,7 @@ export default function BasicCard() {
 				Высчитать Индикатора
 			</Button>
         </Typography>
-		<Typography sx={{fontSize: "18.5px", m:1, ml:0, fontWeight: 'bold'}} color="#000000">
+		<Typography>
 			<CardList/>
 		</Typography>
     </Box>

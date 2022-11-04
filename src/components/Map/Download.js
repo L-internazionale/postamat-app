@@ -17,7 +17,7 @@ export default function BasicMenu() {
       <Button
 		sx={{ 
 			p: 2,
-			mt: 1.5,
+			mt: 0,
 			border: 2,
 			minWidth: 300,
 			color: 'white',

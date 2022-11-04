@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Grid, Card, CardMedia, CardContent, Typography, Button, Alert} from "@mui/material";
-import { Container } from "@mui/system";
+import { Box, Grid, Card, Typography, Divider, Alert} from "@mui/material";
 
 
 const card = {
@@ -10,7 +9,7 @@ const card = {
 };
 export default function SimpleCard() {
 
-  const [cards, setCards] = React.useState([card, card]);
+  const [cards ] = React.useState([card, card]);
 
   return (
 	<Box
@@ -62,6 +61,7 @@ export default function SimpleCard() {
 											Индекс: {rating}
 					</Typography>
 					</Alert>
+					<Divider orientation="vertical" />
 					</Grid>
 					<Grid item xs={8} sx={{mt:2.5}}>
 								<Typography align="center" sx={{fontSize: "15px", fontWeight: 'bold'}}>
