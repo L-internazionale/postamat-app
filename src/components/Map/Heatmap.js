@@ -1,5 +1,5 @@
 import React from 'react'
-import * as heatmapData from "../data/heatmap-info.json";
+import * as heatmapData from "../../data/heatmap-info.json";
 import HeatmapLayer from "react-leaflet-heatmap-layer";
 
 
