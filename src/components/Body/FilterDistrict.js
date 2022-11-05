@@ -1,45 +1,27 @@
+import { useSelector, useDispatch } from "react-redux";
+import { Grid , Box, Select, FormControl, MenuItem, ListItemText, Checkbox, OutlinedInput, Button, List, Chip, ListItem, Typography } from '@mui/material';
 import * as React from 'react';
 
-import {  Box  } from '@mui/material';
-import Typography from '@mui/material/Typography';
-import ListItem from '@mui/material/ListItem';
-import Chip from '@mui/material/Chip';
-import List from '@mui/material/List';
+import { chooseTypes, chooseModel } from '../../store/districtsSlice';
 
-import TagFacesIcon from '@mui/icons-material/TagFaces';
-import Button from '@mui/material/Button';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Checkbox from '@mui/material/Checkbox';
-import ListItemText from '@mui/material/ListItemText';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { Grid } from '@mui/material';
 import CardList from './CardList'
-
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
 
 export default function BasicCard() {
 
-	const [districtData, setDistrictData] = React.useState([
-		{ coordinates: 0, name: 'Angular' },
-		{ coordinates: 1, name: 'jQuery' },
-		{ coordinates: 2, name: 'Polymer' },
-		{ coordinates: 3, name: 'React' },
-		{ coordinates: 4, name: 'Vue.js' },
-		]);
-
+	const chosenDistricts = useSelector((state) => state.districts.chosenDistricts);
+	const dispatch = useDispatch()
+	const types = [
+		'Oliver Hansen',
+		'Van Henry',
+		'April Tucker',
+		'Ralph Hubbard',
+		'Omar Alexander',
+		'Carlos Abbott',
+		'Miriam Wagner',
+		'Bradley Wilkerson',
+		'Virginia Andrews',
+		'Kelly Snyder',
+	  ];
 	const [typeName, setTypeName] = React.useState([]);
 
 	const handleTypeChange = (event) => {
@@ -50,6 +32,7 @@ export default function BasicCard() {
 			// On autofill we get a stringified value.
 			typeof value === 'string' ? value.split(',') : value,
 		);
+		dispatch(chooseTypes(value));
 	};
 
   return (
@@ -81,7 +64,7 @@ export default function BasicCard() {
 				}}
 				subheader={<li />}
 				>
-					{districtData.map((data) => {
+					{chosenDistricts.map((data) => {
 						return (
 						<ListItem>
 							<Chip
@@ -100,7 +83,7 @@ export default function BasicCard() {
 										},
 								}}
 							variant="outlined"
-							label={data.name}
+							label={data.title}
 							/>
 						</ListItem>
 						);
@@ -134,7 +117,7 @@ export default function BasicCard() {
 						renderValue={(selected) => selected.join(', ')}
 						input={<OutlinedInput sx={{ border: 0, borderRadius: 1 }} />}
 						>
-						{names.map((name) => (
+						{types.map((name) => (
 							<MenuItem key={name} value={name}>
 							<Checkbox checked={typeName.indexOf(name) > -1} />
 							<ListItemText primary={name} />
@@ -170,6 +153,9 @@ export default function BasicCard() {
 				
 				variant="outlined"
 				fullWidth
+				onClick={() => {
+					console.log('no');
+				}}
 			>
 				Модель Восстребованности
 			</Button>

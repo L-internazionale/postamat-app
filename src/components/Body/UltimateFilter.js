@@ -1,14 +1,10 @@
 import * as React from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import { Box, Typography, Tabs, Tab } from '@mui/material';
 import FilterDistrict from './FilterDistrict'
 import FilterRadius from './FilterRadius'
 
-
-
 function TabPanel(props) {
+
   const { children, value, index, ...other } = props;
 
   return (

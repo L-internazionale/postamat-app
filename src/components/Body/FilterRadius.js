@@ -1,16 +1,7 @@
 import * as React from 'react';
-
-import {  Box, Grid  } from '@mui/material';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Checkbox from '@mui/material/Checkbox';
-import ListItemText from '@mui/material/ListItemText';
-import MenuItem from '@mui/material/MenuItem';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-
+import { Grid , Box, Select, FormControl, MenuItem, ListItemText, Checkbox, OutlinedInput, Button, InputAdornment, Typography } from '@mui/material';
+import { useSelector, useDispatch } from "react-redux";
+import { chooseRadius, chooseTypes } from '../../store/radiusSlice';
 import CardList from './CardList'
 
 const names = [
@@ -28,6 +19,8 @@ const names = [
 
 export default function BasicCard() {
 
+	const dispatch = useDispatch()
+
 	const [typeName, setTypeName] = React.useState([]);
 	const [values, setValues] = React.useState({
 		radius: 10,
@@ -35,6 +28,7 @@ export default function BasicCard() {
 
 	const handleRadiusChange = (prop) => (event) => {
 		setValues({ ...values, [prop]: event.target.value });
+		dispatch(chooseRadius(event.target.value));
 	  };
 
 	const handleTypeChange = (event) => {
@@ -45,6 +39,7 @@ export default function BasicCard() {
 		// On autofill we get a stringified value.
 		typeof value === 'string' ? value.split(',') : value,
 	);
+	dispatch(chooseTypes(value))
 	};
 
   return (

@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { Box, Grid, Autocomplete, TextField } from '@mui/material';
-import { ReactComponent as Text }from '../../assets/logo.svg'
-import Statistics from './Statistics'
+import { ReactComponent as Text }from '../../assets/logo.svg';
+import Statistics from './Statistics';
+import { useDispatch } from 'react-redux';
+import { chooseDistricts } from '../../store/districtsSlice';
 
 // Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
 const top100Films = [
@@ -132,6 +134,11 @@ const top100Films = [
   ];
 
 export default function BasicCard() {
+	const dispatch = useDispatch()
+	const handleChange = (event) => {
+		console.log(event)
+		dispatch(chooseDistricts(event))
+	  };
   return (
 	<Box sx={{ border: 0,  m:0 }}>
 		<Grid container padding={0} spacing={0}>
@@ -156,6 +163,9 @@ export default function BasicCard() {
 							}}
 						limitTags={3}
 						options={top100Films}
+						onChange={(event, newValue) => {
+						handleChange(newValue);
+						}}
 						getOptionLabel={(option) => option.title}
 						renderInput={(params) => (
 							<TextField {...params} 

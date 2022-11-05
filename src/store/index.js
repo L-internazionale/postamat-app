@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import filterReducer from './filterSlice'
-
+import districtsSlice from './districtsSlice'
+import radiusSlice from './radiusSlice'
 
 export default configureStore({
 	reducer: {
-		filter: filterReducer
+		districts: districtsSlice,
+		radius: radiusSlice 
 	}
 })
