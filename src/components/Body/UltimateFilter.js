@@ -2,6 +2,9 @@ import * as React from 'react';
 import { Box, Typography, Tabs, Tab } from '@mui/material';
 import FilterDistrict from './FilterDistrict'
 import FilterRadius from './FilterRadius'
+import { useDispatch } from "react-redux"
+import { resetDistrictsSlice } from '../../store/districtsSlice'
+import { resetRadiusSlice } from '../../store/radiusSlice'
 
 function TabPanel(props) {
 
@@ -26,8 +29,11 @@ function TabPanel(props) {
 
 export default function BasicTabs() {
   const [value, setValue] = React.useState(0);
+  const dispatch = useDispatch()
 
   const handleChange = (event, newValue) => {
+	dispatch(resetDistrictsSlice())
+	dispatch(resetRadiusSlice())
     setValue(newValue);
   };
 

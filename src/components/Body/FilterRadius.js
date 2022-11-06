@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Grid , Box, Select, FormControl, MenuItem, ListItemText, Checkbox, OutlinedInput, Button, InputAdornment, Typography } from '@mui/material';
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { chooseRadius, chooseTypes } from '../../store/radiusSlice';
+import { chooseObjects } from "../../store/mapSlice";
 import CardList from './CardList'
 
 const types = [
@@ -19,11 +20,13 @@ const types = [
 
 export default function BasicCard() {
 
+	const totalData = useSelector((state) => state.radius)
+	const chosenRadius = useSelector((state) => state.radius.radius)
 	const dispatch = useDispatch()
 
 	const [typeName, setTypeName] = React.useState([]);
 	const [values, setValues] = React.useState({
-		radius: 10,
+		chosenRadius
 	  });
 
 	const handleRadiusChange = (prop) => (event) => {
@@ -39,9 +42,26 @@ export default function BasicCard() {
 		// On autofill we get a stringified value.
 		typeof value === 'string' ? value.split(',') : value,
 	);
-	console.log(event)
-	dispatch(chooseTypes(value))
+	const foundVariableName = types.filter((item) => {
+		return event.target.value.includes(item.label)
+	})
+	console.log(event.target.value)
+	console.log(foundVariableName)
+	dispatch(chooseTypes(foundVariableName));
 	};
+
+function handleClick () {
+		const districtTypes = totalData.chosenTypes.map((item) => {
+			return item.type
+		})
+		const main_api = '"https://postamat-api.vercel.app/api/postamat/circle?lat=' + totalData.coordinates[0] + '&lon=' + totalData.coordinates[1] + '&radius=' + totalData.radius + '&type='+districtTypes.join('&type=') + '&model=convenince'
+		console.log(main_api)
+		fetch(main_api)
+				.then(res => res.json())
+				.then(data => dispatch(chooseObjects(data)))
+				.catch(error => console.log(error))
+	};
+	
 
   return (
 
@@ -117,8 +137,8 @@ export default function BasicCard() {
 						input={<OutlinedInput sx={{ border: 0, borderRadius: 1 }} />}
 						>
 						{types.map((name) => (
-							<MenuItem key={name.type} value={name.label}>
-							<Checkbox checked={typeName.indexOf(name.type) > -1} />
+							<MenuItem key={name.label} value={name.label}>
+							<Checkbox checked={typeName.indexOf(name.label) > -1} />
 							<ListItemText primary={name.label} />
 							</MenuItem>
 						))}
@@ -152,6 +172,7 @@ export default function BasicCard() {
 				
 				variant="outlined"
 				fullWidth
+				onClick={handleClick}
 			>
 				Модель Восстребованности
 			</Button>
@@ -174,7 +195,7 @@ export default function BasicCard() {
 					border: 2
 					},
 				}}
-				
+				onClick={handleClick}
 				variant="outlined"
 				fullWidth
 			>
@@ -199,7 +220,7 @@ export default function BasicCard() {
 					border: 2
 					},
 				}}
-				
+				onClick={handleClick}
 				variant="outlined"
 				fullWidth
 			>

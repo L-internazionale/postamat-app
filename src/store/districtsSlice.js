@@ -4,9 +4,7 @@ const districtsSlice = createSlice({
 	name: 'districts',
 	initialState: {
 		chosenDistricts : [],
-		chosenTypes : ['Oliver Hansen',
-		'Van Henry',
-		'April Tucker'],
+		chosenTypes : []
 	},
 	reducers: {
 		chooseDistricts(state, action) {
@@ -14,10 +12,14 @@ const districtsSlice = createSlice({
 		},
 		chooseTypes(state, action){
 			state.chosenTypes = action.payload
+		},
+		resetDistrictsSlice(state, action){
+			state.chosenDistricts = []
+			state.chosenTypes = []
 		}
 	}
 })
 
-export const { chooseDistricts, chooseTypes } = districtsSlice.actions
+export const { chooseDistricts, chooseTypes, resetDistrictsSlice} = districtsSlice.actions
 
 export default districtsSlice.reducer

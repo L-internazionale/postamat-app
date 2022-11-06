@@ -16,10 +16,15 @@ const radiusSlice = createSlice({
 		},
 		chooseTypes(state, action) {
 			state.chosenTypes = action.payload
+		},
+		resetRadiusSlice(state, action){
+			state.coordinates = []
+			state.radius = 0
+			state.chosenTypes = []
 		}
 	}
 })
 
-export const {chooseRadius, chooseTypes, chooseCoordinates} = radiusSlice.actions
+export const {chooseRadius, chooseTypes, chooseCoordinates, resetRadiusSlice} = radiusSlice.actions
 
 export default radiusSlice.reducer

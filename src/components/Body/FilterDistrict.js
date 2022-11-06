@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Grid , Box, Select, FormControl, MenuItem, ListItemText, Checkbox, OutlinedInput, Button, List, Chip, ListItem, Typography } from '@mui/material';
 import * as React from 'react';
+import axios from 'axios'
 
 import { chooseTypes } from '../../store/districtsSlice';
 import { chooseObjects } from "../../store/mapSlice";
@@ -9,8 +10,9 @@ import CardList from './CardList'
 
 export default function BasicCard() {
 
+	const totalData = useSelector((state) => state.districts)
 	const chosenDistricts = useSelector((state) => state.districts.chosenDistricts);
-	const chosenTypes = useSelector((state) => state.districts.chosenTypes);
+	const chosenMap = useSelector((state) => state.map.mapReference);
 
 	const dispatch = useDispatch()
 	const types = [
@@ -27,21 +29,38 @@ export default function BasicCard() {
 	];
 	const [typeName, setTypeName] = React.useState([]);
 
-	async function handleClick () {
-		console.log(chosenDistricts)
-		const response = await fetch("https://postamat-api.vercel.app/api/postamat/admin?admin=Центральный административный округ&type=papers_kiosks&type=kiosks&model=convenince")
-		const data = await response.json()
+	function handleClick () {
+		const districtNames = totalData.chosenDistricts.map((item) =>{
+			return item.api_name
+		})
+		const districtTypes = totalData.chosenTypes.map((item) => {
+			return item.type
+		})
+		
 		if (chosenDistricts.length > 0){
 			if ('parent_id' in chosenDistricts[0]){
 				console.log('not administrative')
-				dispatch(chooseObjects(chosenDistricts))
+				const main_api = "https://postamat-api.vercel.app/api/postamat/district?district=" + districtNames.join('&district=') + '&type='+districtTypes.join('&type=') + '&model=convenince'
+				fetch(main_api)
+				.then(response => response.text())
+				.then(data => dispatch(chooseObjects(data)))
+				.catch(error => console.log(error))
 			}
 			else{
 				console.log('administrative')
+				const main_api = "https://postamat-api.vercel.app/api/postamat/admin?admin=" + districtNames.join('&admin=') + '&type='+districtTypes.join('&type=') + '&model=convenince'
+				fetch(main_api)
+				.then(res => res.json())
+				.then(data => dispatch(chooseObjects(data)))
+				.catch(error => console.log(error))
 				dispatch(chooseObjects(chosenDistricts))
 			}
 		}
-	  };
+	};
+
+	function flyToDistrict (item){
+		chosenMap.setView(item, 11)
+	};
 
 	const handleTypeChange = (event) => {
 		const {
@@ -109,6 +128,7 @@ export default function BasicCard() {
 								}}
 							variant="outlined"
 							label={data.name}
+							onClick={() => flyToDistrict(data.center)}
 							/>
 						</ListItem>
 						);
