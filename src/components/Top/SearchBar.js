@@ -50,7 +50,7 @@ export default function BasicCard() {
 
 	  };
   return (
-	<Box sx={{ border: 0,  m: 0 }}>
+	<Box sx={{ border: 0,  m: 0}} >
 		<Grid container padding={0} spacing={0}>
 			<Grid item sx={{ mt: 2}} xs={2}>
 				<Text height={270} width={300} />
@@ -85,6 +85,7 @@ export default function BasicCard() {
 							<TextField {...params} 
 							variant="standard"
 							sx={{ 
+								zIndex: 'tooltip',
 								borderBottom: 3,
 								borderColor: '#000000',
 								backgroundColor: "#f9f9f9",

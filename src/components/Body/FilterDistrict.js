@@ -4,7 +4,8 @@ import * as React from 'react';
 import axios from 'axios'
 
 import { chooseTypes } from '../../store/districtsSlice';
-import { chooseObjects } from "../../store/mapSlice";
+import { chooseObjects, choosePoint } from "../../store/mapSlice";
+
 
 import CardList from './CardList'
 
@@ -29,7 +30,7 @@ export default function BasicCard() {
 	];
 	const [typeName, setTypeName] = React.useState([]);
 
-	async function handleClick () {
+	async function handleClick (name) {
 		const districtNames = totalData.chosenDistricts.map((item) =>{
 			return item.api_name
 		})
@@ -40,7 +41,7 @@ export default function BasicCard() {
 		if (chosenDistricts.length > 0){
 			if ('parent_id' in chosenDistricts[0]){
 				console.log('not administrative')
-				const main_api = "https://postamat-api.vercel.app/api/postamat/district?district=" + districtNames.join('&district=') + '&type='+districtTypes.join('&type=') + '&model=convenince'
+				const main_api = "https://postamat-api.vercel.app/api/postamat/district?district=" + districtNames.join('&district=') + '&type='+districtTypes.join('&type=') + '&model=' + name
 				console.log(main_api)
 				axios.get(main_api)
 					.then(response => dispatch(chooseObjects(response.data)))
@@ -50,7 +51,7 @@ export default function BasicCard() {
 			}
 			else{
 				console.log('administrative')
-				const main_api = "https://postamat-api.vercel.app/api/postamat/admin?admin=" + districtNames.join('&admin=') + '&type='+districtTypes.join('&type=') + '&model=convenince'
+				const main_api = "https://postamat-api.vercel.app/api/postamat/admin?admin=" + districtNames.join('&admin=') + '&type='+districtTypes.join('&type=') + '&model=main'
 				console.log(main_api)
 				axios.get(main_api)
 					.then(response => dispatch(chooseObjects(response.data)))
@@ -59,10 +60,6 @@ export default function BasicCard() {
 					})
 			}
 		}
-	};
-
-	function flyToDistrict (item){
-		chosenMap.setView(item, 11)
 	};
 
 	const handleTypeChange = (event) => {
@@ -131,7 +128,7 @@ export default function BasicCard() {
 								}}
 							variant="outlined"
 							label={data.name}
-							onClick={() => flyToDistrict(data.center)}
+							onClick={() => {dispatch(choosePoint({'coordinates':[data.center[0], data.center[1]], 'zoom': 11}))}}
 							/>
 						</ListItem>
 						);
@@ -201,9 +198,9 @@ export default function BasicCard() {
 				
 				variant="outlined"
 				fullWidth
-				onClick={handleClick}
+				onClick={() => {handleClick('main')}}
 			>
-				Модель Восстребованности
+				Основная модель
 			</Button>
 			<Button
 				sx={{ 
@@ -224,11 +221,11 @@ export default function BasicCard() {
 					border: 2
 					},
 				}}
-				onClick={handleClick}
+				onClick={() => {handleClick('Population')}}
 				variant="outlined"
 				fullWidth
 			>
-				Модель плотности
+				Модель на основании плотности населения 
 			</Button>
 			<Button
 				sx={{ 
@@ -249,11 +246,11 @@ export default function BasicCard() {
 					border: 2
 					},
 				}}
-				
+				onClick={() => {handleClick('Traffic')}}
 				variant="outlined"
 				fullWidth
 			>
-				Высчитать Индикатора
+				Модель на основании загружненности трафика
 			</Button>
         </Typography>
 		<Typography>

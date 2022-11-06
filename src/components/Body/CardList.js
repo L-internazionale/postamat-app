@@ -1,15 +1,21 @@
 import React from "react";
-import { Box, Grid, Card, Typography, Divider, Alert} from "@mui/material";
+import { Box, Grid, Card, Typography, CardActionArea, Divider, Alert} from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { choosePoint } from "../../store/mapSlice";
 
 
-const card = {
-  name: "улица Ленина  45",
-  type: "Библиотека",
-  rating: "100"
+const types = {
+	'kiosks':'Киоск',
+	'gosuslugi':'Государственные Услуга',
+	'libraries':'Библиотека',
+	'sport':'Спортивный объект',
+	'culture_clubs':'Дом Культуры'
 };
+
 export default function SimpleCard() {
 
-  const [cards ] = React.useState([card, card]);
+  const dispatch = useDispatch()
+  const chosenPoints = useSelector((state) => state.map.chosenObjects)
 
   return (
 	<Box
@@ -17,7 +23,7 @@ export default function SimpleCard() {
 	border: 0, 
 	borderColor: '#bfbfbf',
 	backgroundColor: "#f9f9f9",
-	maxHeight: "95px",
+	maxHeight: "230px",
 	overflowY: "scroll",
 	boxShadow: 0,
 	borderRadius: 2,
@@ -25,8 +31,7 @@ export default function SimpleCard() {
 	}}
 	> 
     <Grid container spacing={1}>
-        {cards.map((cards, index) => {
-          const { rating, name, type } = cards;
+        {chosenPoints.map((point, index) => {
           return (
             <Grid item sx={{height:'100%'}}xs={12}>
               <Card key={index}  sx={{
@@ -44,6 +49,7 @@ export default function SimpleCard() {
 				borderRadius: 2,
 				minWidth: 300,
 				}} >
+				<CardActionArea onClick={() => {dispatch(choosePoint({'coordinates':[point.geometry.coordinates[1], point.geometry.coordinates[0]], 'zoom': 15}))}}>
 				<Grid container spacing={0}>
 					<Grid item xs={4}>
 					<Alert
@@ -58,20 +64,21 @@ export default function SimpleCard() {
 						}}
 					severity="error">
 					<Typography align="center" sx={{fontSize: "15px", fontWeight: 'bold'}}>
-											Индекс: {rating}
+											Индекс: {Number((point.rating).toFixed(1))}
 					</Typography>
 					</Alert>
 					<Divider orientation="vertical" />
 					</Grid>
 					<Grid item xs={8} sx={{mt:2.5}}>
 								<Typography align="center" sx={{fontSize: "15px", fontWeight: 'bold'}}>
-								Адрес: {name}
+								Адрес: {point.address}
 								</Typography>
 								<Typography align="center" sx={{fontSize: "15px", fontWeight: 'bold'}}>
-								Тип Обьекта: {type}
+								Тип Обьекта: {types[point.type]}
 								</Typography>
 					</Grid>
 				</Grid>
+				</CardActionArea>
               </Card>
             </Grid>
           );

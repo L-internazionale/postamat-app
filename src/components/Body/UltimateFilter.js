@@ -5,6 +5,7 @@ import FilterRadius from './FilterRadius'
 import { useDispatch } from "react-redux"
 import { resetDistrictsSlice } from '../../store/districtsSlice'
 import { resetRadiusSlice } from '../../store/radiusSlice'
+import { resetMap } from '../../store/mapSlice'
 
 function TabPanel(props) {
 
@@ -34,6 +35,7 @@ export default function BasicTabs() {
   const handleChange = (event, newValue) => {
 	dispatch(resetDistrictsSlice())
 	dispatch(resetRadiusSlice())
+	dispatch(resetMap())
     setValue(newValue);
   };
 

@@ -3,7 +3,7 @@ const DATA = [
       "id": 1,
       "name": "Северо-Западный",
       "area": 93.28,
-      "population": 1009217,
+      "population": 1009.217,
       "polygon": [
         [
           [
@@ -3610,7 +3610,7 @@ const DATA = [
       "id": 2,
       "name": "Северный",
       "area": 113.73,
-      "population": 1175229,
+      "population": 1175.229,
       "polygon": [
         [
           [
@@ -7703,7 +7703,7 @@ const DATA = [
       "id": 3,
       "name": "Юго-Западный",
       "area": 111.36,
-      "population": 1442971,
+      "population": 1442.971,
       "polygon": [
         [
           [
@@ -12922,7 +12922,7 @@ const DATA = [
       "id": 4,
       "name": "Северо-Восточный",
       "area": 101.88,
-      "population": 1427597,
+      "population": 1427.597,
       "polygon": [
         [
           [
@@ -16129,7 +16129,7 @@ const DATA = [
       "id": 5,
       "name": "Центральный",
       "area": 66.18,
-      "population": 779086,
+      "population": 779.086,
       "polygon": [
         [
           [
@@ -18248,7 +18248,7 @@ const DATA = [
       "id": 6,
       "name": "Южный",
       "area": 131.77,
-      "population": 1773425,
+      "population": 1773.425,
       "polygon": [
         [
           [
@@ -21903,7 +21903,7 @@ const DATA = [
       "id": 7,
       "name": "Юго-Восточный",
       "area": 117.56,
-      "population": 1432839,
+      "population": 1432.839,
       "polygon": [
         [
           [
@@ -25864,7 +25864,7 @@ const DATA = [
       "id": 8,
       "name": "Западный",
       "area": 153.03,
-      "population": 1383853,
+      "population": 1383.853,
       "polygon": [
         [
           [
@@ -37227,7 +37227,7 @@ const DATA = [
       "id": 9,
       "name": "Восточный",
       "area": 154.84,
-      "population": 1514420,
+      "population": 1514.420,
       "polygon": [
         [
           [

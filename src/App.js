@@ -24,9 +24,9 @@ function App() {
   })
 
   return (
-	<ThemeProvider theme={theme}>
+	<ThemeProvider className="App"  id="App" theme={theme}>
 		<CssBaseline/>
-		<Container maxWidth={'xl'}>
+		<Container  id='containerId' maxWidth={'xl'}>
 			<Grid container padding={0} spacing={0}>
 			
 						<Grid item xs={12} >
@@ -42,7 +42,7 @@ function App() {
 						<Grid item xs={7}>
 							<Grid container padding={0} spacing={1}>
 
-								<Grid item xs={12}>
+								<Grid item id="mapComponent" xs={12}>
 									<MapComponent/>
 								</Grid>
 
@@ -56,7 +56,7 @@ function App() {
 			</Grid>
 
 		</Container>
-		</ThemeProvider>
+	</ThemeProvider>
   );
 }
 

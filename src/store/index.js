@@ -1,9 +1,8 @@
 import {
   configureStore
 } from '@reduxjs/toolkit'
+
 import {
-	persistStore,
-	persistReducer,
 	FLUSH,
 	REHYDRATE,
 	PAUSE,
@@ -11,10 +10,15 @@ import {
 	PURGE,
 	REGISTER,
   } from 'redux-persist'
+
 import districtsSlice from './districtsSlice'
 import radiusSlice from './radiusSlice'
 import mapSlice from './mapSlice'
 
+/*
+В этом файле собраны все редюсеры, что позволяет нам
+следить за состояниями и контролировать программу
+*/
 
 export default configureStore({
 	reducer: {

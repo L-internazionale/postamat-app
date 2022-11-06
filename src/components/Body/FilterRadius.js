@@ -51,11 +51,11 @@ export default function BasicCard() {
 	dispatch(chooseTypes(foundVariableName));
 	};
 
-async function handleClick () {
+async function handleClick (name) {
 		const districtTypes = totalData.chosenTypes.map((item) => {
 			return item.type
 		})
-		const main_api = 'https://postamat-api.vercel.app/api/postamat/circle?lat=' + totalData.coordinates[0] + '&lon=' + totalData.coordinates[1] + '&radius=' + totalData.radius + '&type='+districtTypes.join('&type=') + '&model=convenince'
+		const main_api = 'https://postamat-api.vercel.app/api/postamat/circle?lat=' + totalData.coordinates[0] + '&lon=' + totalData.coordinates[1] + '&radius=' + totalData.radius + '&type='+districtTypes.join('&type=') + '&model=' + name
 		console.log(main_api)
 		axios.get(main_api)
 			.then(response => dispatch(chooseObjects(response.data)))
@@ -174,9 +174,9 @@ async function handleClick () {
 				
 				variant="outlined"
 				fullWidth
-				onClick={handleClick}
+				onClick={() => {handleClick('main')}}
 			>
-				Модель Восстребованности
+				Основная модель
 			</Button>
 			<Button
 				sx={{ 
@@ -197,11 +197,11 @@ async function handleClick () {
 					border: 2
 					},
 				}}
-				onClick={handleClick}
+				onClick={() => {handleClick('Population')}}
 				variant="outlined"
 				fullWidth
 			>
-				Модель плотности
+				Модель на основании плотности населения 
 			</Button>
 			<Button
 				sx={{ 
@@ -222,11 +222,11 @@ async function handleClick () {
 					border: 2
 					},
 				}}
-				onClick={handleClick}
+				onClick={() => {handleClick('Traffic')}}
 				variant="outlined"
 				fullWidth
 			>
-				Высчитать Индикатора
+				Модель на основании загружненности трафика
 			</Button>
         </Typography>
 		<Typography>

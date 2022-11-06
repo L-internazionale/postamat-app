@@ -18,6 +18,8 @@ export default function MediaCard() {
 		return item.population + currentTotal
 	}, 0))
 
+	const chosenPoints = useSelector((state) => state.map.chosenObjects.length)
+
   return (
 	<Box
 		sx={{
@@ -46,7 +48,7 @@ export default function MediaCard() {
 			minWidth: 300,
 			}}
 		severity="error">
-		<Typography align="center" sx={{fontSize: "15px", fontWeight: 'bold'}}>Площадь: {totalArea} m</Typography>
+		<Typography align="center" sx={{fontSize: "15px", fontWeight: 'bold'}}>Площадь: {totalArea} км²</Typography>
 		</Alert>
         </Grid>
         <Grid item xs={6}>
@@ -61,7 +63,7 @@ export default function MediaCard() {
 			minWidth: 300,
 			}}
 		severity="error">
-		<Typography align="center" sx={{fontSize: "15px", fontWeight: 'bold'}}>Население: {totalPopulation}</Typography>
+		<Typography align="center" sx={{fontSize: "15px", fontWeight: 'bold'}}>Население: {totalPopulation * 1000}</Typography>
 		</Alert>
         </Grid>
         <Grid item xs={6}>
@@ -76,7 +78,7 @@ export default function MediaCard() {
 			minWidth: 300,
 			}}
 		severity="error">
-		<Typography align="center" sx={{fontSize: "15px", fontWeight: 'bold'}}>Плотность: 45 ч/м</Typography>
+		<Typography align="center" sx={{fontSize: "15px", fontWeight: 'bold'}}>Плотность: {Number((totalPopulation / totalArea * 1000).toFixed(1)) } ч/км²</Typography>
 		</Alert>
         </Grid>
         <Grid item xs={6}>
@@ -91,7 +93,7 @@ export default function MediaCard() {
 			minWidth: 300,
 			}}
 		severity="error">
-		<Typography align="center" sx={{fontSize: "15px", fontWeight: 'bold'}}>Мест для потенциальных постоматов: 45 000</Typography>
+		<Typography align="center" sx={{fontSize: "15px", fontWeight: 'bold'}}>Мест для потенциальных постоматов: {chosenPoints} </Typography>
 		</Alert>
         </Grid>
       </Grid>
