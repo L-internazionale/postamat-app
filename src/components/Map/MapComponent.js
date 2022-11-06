@@ -86,7 +86,11 @@ const MapComponent = () => {
 			))}
 
 			{chosenPoints.map(point => (
-				console.log(point.geometry['coordinates'])
+				<Marker
+				key={point._id}
+				position={point.geometry.coordinates}
+				icon={icon}
+				/>
 			))}
 
 			</Map>

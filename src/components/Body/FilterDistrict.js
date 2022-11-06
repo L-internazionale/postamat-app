@@ -29,7 +29,7 @@ export default function BasicCard() {
 	];
 	const [typeName, setTypeName] = React.useState([]);
 
-	function handleClick () {
+	async function handleClick () {
 		const districtNames = totalData.chosenDistricts.map((item) =>{
 			return item.api_name
 		})
@@ -41,19 +41,22 @@ export default function BasicCard() {
 			if ('parent_id' in chosenDistricts[0]){
 				console.log('not administrative')
 				const main_api = "https://postamat-api.vercel.app/api/postamat/district?district=" + districtNames.join('&district=') + '&type='+districtTypes.join('&type=') + '&model=convenince'
-				fetch(main_api)
-				.then(response => response.text())
-				.then(data => dispatch(chooseObjects(data)))
-				.catch(error => console.log(error))
+				console.log(main_api)
+				axios.get(main_api)
+					.then(response => dispatch(chooseObjects(response.data)))
+					.catch((error) => {
+						console.error(error)
+					})
 			}
 			else{
 				console.log('administrative')
 				const main_api = "https://postamat-api.vercel.app/api/postamat/admin?admin=" + districtNames.join('&admin=') + '&type='+districtTypes.join('&type=') + '&model=convenince'
-				fetch(main_api)
-				.then(res => res.json())
-				.then(data => dispatch(chooseObjects(data)))
-				.catch(error => console.log(error))
-				dispatch(chooseObjects(chosenDistricts))
+				console.log(main_api)
+				axios.get(main_api)
+					.then(response => dispatch(chooseObjects(response.data)))
+					.catch((error) => {
+						console.error(error)
+					})
 			}
 		}
 	};

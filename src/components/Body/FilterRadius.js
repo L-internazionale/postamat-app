@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { chooseRadius, chooseTypes } from '../../store/radiusSlice';
 import { chooseObjects } from "../../store/mapSlice";
 import CardList from './CardList'
+import axios from 'axios'
 
 const types = [
 	{label: 'Киоски',
@@ -50,16 +51,17 @@ export default function BasicCard() {
 	dispatch(chooseTypes(foundVariableName));
 	};
 
-function handleClick () {
+async function handleClick () {
 		const districtTypes = totalData.chosenTypes.map((item) => {
 			return item.type
 		})
-		const main_api = '"https://postamat-api.vercel.app/api/postamat/circle?lat=' + totalData.coordinates[0] + '&lon=' + totalData.coordinates[1] + '&radius=' + totalData.radius + '&type='+districtTypes.join('&type=') + '&model=convenince'
+		const main_api = 'https://postamat-api.vercel.app/api/postamat/circle?lat=' + totalData.coordinates[0] + '&lon=' + totalData.coordinates[1] + '&radius=' + totalData.radius + '&type='+districtTypes.join('&type=') + '&model=convenince'
 		console.log(main_api)
-		fetch(main_api)
-				.then(res => res.json())
-				.then(data => dispatch(chooseObjects(data)))
-				.catch(error => console.log(error))
+		axios.get(main_api)
+			.then(response => dispatch(chooseObjects(response.data)))
+			.catch((error) => {
+				console.error(error)
+			})
 	};
 	
 
