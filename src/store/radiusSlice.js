@@ -20,8 +20,6 @@ const radiusSlice = createSlice({
 	}
 })
 
-export const selectInfoRadius = (state) => state.radius
-
 export const {chooseRadius, chooseTypes, chooseCoordinates} = radiusSlice.actions
 
 export default radiusSlice.reducer

@@ -1,21 +1,21 @@
 import * as React from 'react';
 import { Grid , Box, Select, FormControl, MenuItem, ListItemText, Checkbox, OutlinedInput, Button, InputAdornment, Typography } from '@mui/material';
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { chooseRadius, chooseTypes } from '../../store/radiusSlice';
 import CardList from './CardList'
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
+const types = [
+	{label: 'Киоски',
+	 type: 'kiosks'},
+	{label: 'Государственные Услуги',
+	 type: 'gosuslugi'},
+	{label: 'Библиотеки',
+	 type: 'libraries'},
+	{label: 'Спортивные объекты',
+	 type: 'sport'},
+	{label: 'Дома Культуры',
+	 type: 'culture_clubs'},
+  ];
 
 export default function BasicCard() {
 
@@ -39,6 +39,7 @@ export default function BasicCard() {
 		// On autofill we get a stringified value.
 		typeof value === 'string' ? value.split(',') : value,
 	);
+	console.log(event)
 	dispatch(chooseTypes(value))
 	};
 
@@ -115,10 +116,10 @@ export default function BasicCard() {
 						renderValue={(selected) => selected.join(', ')}
 						input={<OutlinedInput sx={{ border: 0, borderRadius: 1 }} />}
 						>
-						{names.map((name) => (
-							<MenuItem key={name} value={name}>
-							<Checkbox checked={typeName.indexOf(name) > -1} />
-							<ListItemText primary={name} />
+						{types.map((name) => (
+							<MenuItem key={name.type} value={name.label}>
+							<Checkbox checked={typeName.indexOf(name.type) > -1} />
+							<ListItemText primary={name.label} />
 							</MenuItem>
 						))}
 					</Select>

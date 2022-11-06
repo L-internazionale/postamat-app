@@ -1,11 +1,10 @@
 import React from "react";
-import { Map, Marker, Popup, Pane, Circle, TileLayer, Polygon } from "react-leaflet";
+import { Map, Marker, Popup, Pane, Circle, useMap, TileLayer, Polygon } from "react-leaflet";
 import { Icon } from "leaflet";
-import * as parkData from "../../data/skateboard-parks.json";
-import * as districtData from "../../data/districts.json"
 import Heatmap from "./Heatmap";
+import { useSelector } from "react-redux";
 import "./Map.css";
-import { Box} from '@mui/material';
+import { Box } from '@mui/material';
 
 export const icon = new Icon({
   iconUrl: "/skateboarding.svg",
@@ -17,14 +16,16 @@ export const blackOptions = { color: 'black' }
 
 
 const MapComponent = () => {
-  const [activePark, setActivePark] = React.useState(null);
+  const chosenDistricts = useSelector((state) => state.districts.chosenDistricts);
   const purpleOptions = { color: 'purple' }
+  const [map, setMap] = React.useState(null)
+
   return (
 		<Box sx={{ 
 			width: '100%',
         	height: '100%',
 			}}>
-		    <Map center={[55.755825, 37.617298]} zoom={12}>
+		    <Map center={[55.755825, 37.617298]}  zoom={12}>
 			<Heatmap/>
 			<TileLayer
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -36,48 +37,17 @@ const MapComponent = () => {
 				<Popup>Hello world</Popup>
 			</Marker>
 
-			{districtData.features.map(district => (
+			{chosenDistricts.map(district => (
 				<Polygon
-				positions={[
-					district.geometry.coordinates
-				]}
+				positions={
+					district.polygon
+				}
 				onClick={() => {
-					console.log('mosab');
+					console.log(district);
 				}}
 				pathOptions={purpleOptions}
 				/>
 			))}
-
-			{parkData.features.map(park => (
-				<Marker
-				key={park.properties.PARK_ID}
-				position={[
-					park.geometry.coordinates[1],
-					park.geometry.coordinates[0]
-				]}
-				onClick={() => {
-					setActivePark(park);
-				}}
-				icon={icon}
-				/>
-			))}
-
-			{activePark && (
-				<Popup
-				position={[
-					activePark.geometry.coordinates[1],
-					activePark.geometry.coordinates[0]
-				]}
-				onClose={() => {
-					setActivePark(null);
-				}}
-				>
-				<div>
-					<h2>{activePark.properties.NAME}</h2>
-					<p>{activePark.properties.DESCRIPTIO}</p>
-				</div>
-				</Popup>
-			)}
 			</Map>
 		</Box>
   )

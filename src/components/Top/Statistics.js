@@ -5,7 +5,19 @@ import LandscapeIcon from '@mui/icons-material/Landscape';
 import GroupIcon from '@mui/icons-material/Group';
 import ApprovalIcon from '@mui/icons-material/Approval';
 
+import { useSelector } from "react-redux";
+
+
 export default function MediaCard() {
+
+	const totalArea = useSelector((state) => state.districts.chosenDistricts.reduce((currentTotal, item) => {
+		return item.area + currentTotal
+	}, 0))
+
+	const totalPopulation = useSelector((state) => state.districts.chosenDistricts.reduce((currentTotal, item) => {
+		return item.population + currentTotal
+	}, 0))
+
   return (
 	<Box
 		sx={{
@@ -34,7 +46,7 @@ export default function MediaCard() {
 			minWidth: 300,
 			}}
 		severity="error">
-		<Typography align="center" sx={{fontSize: "15px", fontWeight: 'bold'}}>Площадь: 54,000 m</Typography>
+		<Typography align="center" sx={{fontSize: "15px", fontWeight: 'bold'}}>Площадь: {totalArea} m</Typography>
 		</Alert>
         </Grid>
         <Grid item xs={6}>
@@ -49,7 +61,7 @@ export default function MediaCard() {
 			minWidth: 300,
 			}}
 		severity="error">
-		<Typography align="center" sx={{fontSize: "15px", fontWeight: 'bold'}}>Население: 456'345</Typography>
+		<Typography align="center" sx={{fontSize: "15px", fontWeight: 'bold'}}>Население: {totalPopulation}</Typography>
 		</Alert>
         </Grid>
         <Grid item xs={6}>

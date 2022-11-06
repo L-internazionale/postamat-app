@@ -2,37 +2,62 @@ import { useSelector, useDispatch } from "react-redux";
 import { Grid , Box, Select, FormControl, MenuItem, ListItemText, Checkbox, OutlinedInput, Button, List, Chip, ListItem, Typography } from '@mui/material';
 import * as React from 'react';
 
-import { chooseTypes, chooseModel } from '../../store/districtsSlice';
+import { chooseTypes } from '../../store/districtsSlice';
+import { chooseObjects } from "../../store/mapSlice";
 
 import CardList from './CardList'
 
 export default function BasicCard() {
 
 	const chosenDistricts = useSelector((state) => state.districts.chosenDistricts);
+	const chosenTypes = useSelector((state) => state.districts.chosenTypes);
+
 	const dispatch = useDispatch()
 	const types = [
-		'Oliver Hansen',
-		'Van Henry',
-		'April Tucker',
-		'Ralph Hubbard',
-		'Omar Alexander',
-		'Carlos Abbott',
-		'Miriam Wagner',
-		'Bradley Wilkerson',
-		'Virginia Andrews',
-		'Kelly Snyder',
-	  ];
+		{label: 'Киоски',
+		 type: 'kiosks'},
+		{label: 'Государственные Услуги',
+		 type: 'gosuslugi'},
+		{label: 'Библиотеки',
+		 type: 'libraries'},
+		{label: 'Спортивные объекты',
+		 type: 'sport'},
+		{label: 'Дома Культуры',
+		 type: 'culture_clubs'},
+	];
 	const [typeName, setTypeName] = React.useState([]);
+
+	async function handleClick () {
+		console.log(chosenDistricts)
+		const response = await fetch("https://postamat-api.vercel.app/api/postamat/admin?admin=Центральный административный округ&type=papers_kiosks&type=kiosks&model=convenince")
+		const data = await response.json()
+		if (chosenDistricts.length > 0){
+			if ('parent_id' in chosenDistricts[0]){
+				console.log('not administrative')
+				dispatch(chooseObjects(chosenDistricts))
+			}
+			else{
+				console.log('administrative')
+				dispatch(chooseObjects(chosenDistricts))
+			}
+		}
+	  };
 
 	const handleTypeChange = (event) => {
 		const {
 			target: { value },
 		} = event;
+
 		setTypeName(
 			// On autofill we get a stringified value.
 			typeof value === 'string' ? value.split(',') : value,
 		);
-		dispatch(chooseTypes(value));
+		const foundVariableName = types.filter((item) => {
+			return event.target.value.includes(item.label)
+		})
+		console.log(event.target.value)
+		console.log(foundVariableName)
+		dispatch(chooseTypes(foundVariableName));
 	};
 
   return (
@@ -83,7 +108,7 @@ export default function BasicCard() {
 										},
 								}}
 							variant="outlined"
-							label={data.title}
+							label={data.name}
 							/>
 						</ListItem>
 						);
@@ -118,9 +143,9 @@ export default function BasicCard() {
 						input={<OutlinedInput sx={{ border: 0, borderRadius: 1 }} />}
 						>
 						{types.map((name) => (
-							<MenuItem key={name} value={name}>
-							<Checkbox checked={typeName.indexOf(name) > -1} />
-							<ListItemText primary={name} />
+							<MenuItem key={name.label} value={name.label}>
+							<Checkbox checked={typeName.indexOf(name.label) > -1} />
+							<ListItemText primary={name.label} />
 							</MenuItem>
 						))}
 					</Select>
@@ -153,9 +178,7 @@ export default function BasicCard() {
 				
 				variant="outlined"
 				fullWidth
-				onClick={() => {
-					console.log('no');
-				}}
+				onClick={handleClick}
 			>
 				Модель Восстребованности
 			</Button>
@@ -178,7 +201,7 @@ export default function BasicCard() {
 					border: 2
 					},
 				}}
-				
+				onClick={handleClick}
 				variant="outlined"
 				fullWidth
 			>
