@@ -9,6 +9,7 @@
     "@mui-treasury/styles": "^1.13.1",
     "@mui/icons-material": "^5.10.9",
     "@mui/joy": "^5.0.0-alpha.52",
+    "@mui/lab": "^5.0.0-alpha.107",
     "@mui/material": "^5.10.12",
     "@mui/styled-engine-sc": "^5.10.6",
     "@reduxjs/toolkit": "^1.8.6",

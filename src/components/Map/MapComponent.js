@@ -42,6 +42,7 @@ const MapComponent = () => {
   const chosenZoom = useSelector((state) => state.map.zoomParameter)
 
   const chosenRadius = useSelector((state) => state.radius.radius)
+  const chosenCoordinates = useSelector((state) => state.radius.coordinates)
   const purpleOptions = { color: 'purple' };
   const [marker, setMarker] = React.useState({lat: 0, lng: 0});
   
@@ -57,8 +58,6 @@ const MapComponent = () => {
 		console.info("Lat:", lat);
 		console.info("Lng: ",lng);
 		dispatch(chooseCoordinates([lat,lng]))
-		console.log(e.latlng)
-		setMarker(e.latlng);
 	}
 
   function handleToFly(districtToFly, zoomParameter){
@@ -111,10 +110,10 @@ const MapComponent = () => {
 					Тепловая карта : {isToggled ? 'активна' : 'не активна'}
 					</Button>
 			 {isToggled ? <Heatmap/>  : 'не активна'}
-            {(marker.lat !== 0 && marker.lng !== 0) &&
-            <Marker position={[marker.lat, marker.lng]}>
+            {(chosenCoordinates[0] !== 0 && chosenCoordinates[1] !== 0) &&
+            <Marker position={[chosenCoordinates[0], chosenCoordinates[1]]}>
 			<Circle 
-                  center={{lat:marker.lat, lng: marker.lng}}
+                  center={{lat:chosenCoordinates[0], lng:chosenCoordinates[1]}}
                   fillColor="blue" 
                   radius={chosenRadius}/>
             </Marker>}
