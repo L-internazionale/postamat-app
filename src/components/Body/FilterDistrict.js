@@ -117,7 +117,7 @@ export default function BasicCard() {
 	}}
 	>
         <Typography sx={{fontSize: "18.5px", m:1, ml:0, fontWeight: 'bold'}} color="#000000" >
-            Список выбранных районов : 
+            Список выбранных районов : {chosenDistricts.length > 0 ? console.log('empty') : 'пуст'}
 			<List
 				sx={{
 					mt: '1',
