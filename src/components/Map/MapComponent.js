@@ -70,7 +70,7 @@ const MapComponent = () => {
   const [isToggled, setIsToggled] = React.useState(false);
 
   const chosenDistricts = useSelector((state) => state.districts.chosenDistricts);
-  const chosenPoints = useSelector((state) => state.map.chosenObjects)
+  const chosenPoints = useSelector((state) => state.map.sortedChosenObjects)
   const chosenPoint = useSelector((state) => state.map.chosenPoint);
   const chosenZoom = useSelector((state) => state.map.zoomParameter)
 
