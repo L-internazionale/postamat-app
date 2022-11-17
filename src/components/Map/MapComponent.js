@@ -12,7 +12,7 @@ import AssuredWorkloadIcon from '@mui/icons-material/AssuredWorkload';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import { Box, Button, Typography } from '@mui/material';
-import { chooseMap, chooseFromTo } from "../../store/mapSlice";
+import { chooseMap, chooseFromTo, resetMap } from "../../store/mapSlice";
 import { chooseCoordinates } from "../../store/radiusSlice";
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import { Grid } from '@mui/material';
@@ -100,6 +100,7 @@ const MapComponent = () => {
 		let {lat, lng} = e.latlng;
 		console.info("Lat:", lat);
 		console.info("Lng: ",lng);
+		dispatch(resetMap())
 		dispatch(chooseCoordinates([lat,lng]))
 	}else{
 		console.log('not allowed')
@@ -191,6 +192,7 @@ const MapComponent = () => {
 				<Grid xs={12}>
 					<Map 
 					ref={mapRef}
+					id="mapComponent"
 					center={[55.755825, 37.617298]}
 					zoom={10}
 					zIndex='modal'
